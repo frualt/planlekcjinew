@@ -1,0 +1,123 @@
+<html>
+<head>
+
+
+</head>
+<body>
+
+
+    <script>
+        
+
+async function loadFile(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.text();
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function govno(){
+    
+var zmien = 0
+var lcba = await loadFile("http://localhost/lcb.txt");
+var json =  await loadFile("http://localhost/plannew.txt");
+dni = ["pon","wtr","srd","czw","pia"]
+
+jsona = JSON.parse(json);
+const body = document.body;
+marqueex = document.createElement("marquee");
+marqueey = document.createElement("marquee");
+tbl = document.createElement("table");
+tbl.style.border = '2px solid black'
+
+console.log(lcba)
+console.log("a")    
+console.log(jsona)
+for(let i = 0; i<lcba; i++){
+    console.log(i) 
+    const tr = tbl.insertRow();
+    const td = tr.insertCell();
+    td.appendChild(document.createTextNode(i));
+
+
+    for(let x = 0; x<5;x++){
+        const td = tr.insertCell();
+        td.appendChild(document.createTextNode(jsona[dni[x]][i]));
+        td.style.border = '1px dotted black'
+        console.log(jsona[dni[x]][i])
+    }
+    marqueex.setAttribute("scrolldelay","0.05")
+    marqueex.setAttribute("height","100%")
+    marqueey.setAttribute("height","100%")
+    marqueey.setAttribute("scrolldelay","0.05")
+    marqueex.setAttribute("scrollamount","100px")
+    marqueey.setAttribute("scrollamount","100px")
+    marqueex.appendChild(tbl);
+    marqueey.setAttribute("direction","up")
+    marqueey.appendChild(marqueex);
+    tbl.style.backgroundColor = "white";
+    body.appendChild(marqueey);
+}
+
+
+}
+
+setInterval(() => {
+    
+
+
+var rect = tbl.getBoundingClientRect();
+console.log(rect.left);
+if(rect.left <=11){
+    marqueex.setAttribute("direction","right")
+}
+else if(rect.left>=1135.383){
+    marqueex.setAttribute("direction","left")
+
+}
+if(rect.top<=14){
+    marqueey.setAttribute("direction","down")
+
+}
+if(rect.top>=684){
+    marqueey.setAttribute("direction","up")
+
+}
+
+
+
+}, 0.1);
+
+setInterval(() => {
+        document.body.style.backgroundColor = "#F00";
+        tbl.style.backgroundColor = "#0F0";
+        tbl.style.color = "#00F"
+
+
+
+}, 25);
+
+
+setInterval(() => {
+        document.body.style.backgroundColor = "#00F";
+        tbl.style.backgroundColor = "#F00";
+        tbl.style.color = "#0F0";
+}, 50);
+
+
+setInterval(() => {
+        document.body.style.backgroundColor = "#0F0";
+        tbl.style.backgroundColor = "#00F";
+        tbl.style.color = "#F00"
+
+}, 75);
+
+
+govno();
+
+    </script>
+</body>
+</html>
